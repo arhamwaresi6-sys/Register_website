@@ -56,12 +56,21 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-solid" id="edit-btn" type="button">
-            Edit
-          </button>
-          <button class="btn btn-ghost" id="delete-btn" type="button">
-            Delete
-          </button>
+          
+            <button
+              type="button"
+              class="btn btn-solid"
+              id="edit-btn"
+              type="button"
+            >
+              Edit
+            </button>
+          
+          
+            <button type="button" class="btn btn-ghost" id="delete-btn">
+              Delete
+            </button>
+          
         </div>
       </section>
 
@@ -158,9 +167,34 @@
           </dl>
         </section>
       </div>
+      <div class="modal-overlay" id="deleteModal">
+        <div class="delete-modal">
+          <button class="modal-close" onclick="closeDeleteModal()">
+            &times;
+          </button>
+          <h2>Delete Member</h2>
+          <p class="warning-text">
+            You are about to delete {{member.name}}Member</strong>.
+          </p>
+          <p class="confirm-text">
+            Enter your password to confirm this action.
+          </p>
+          <form id="deleteForm">
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              id="pass"
+              data-id="{{member.id}}"
+              required
+            />
+            <button type="button" class="confirm-delete" id="submitBtn">Delete Member</button>
+          </form>
+        </div>
+      </div>
     </main>
 
     <!-- Hook your JS here -->
-    <!-- <script src="{{ url_for('static', filename='js/member.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='member.js') }}"></script>
   </body>
 </html>

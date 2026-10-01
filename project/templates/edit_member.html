@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Edit Member</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='edit_member.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="page">
+
+      <!-- HEADER -->
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">MEMBER MANAGEMENT</p>
+
+          <h1>Edit Member</h1>
+
+          <p class="subtitle">
+            Update the information for {{ member.name }}.
+          </p>
+        </div>
+
+        <a
+          href="{{ url_for('main.member', id=member.id) }}"
+          class="back-btn"
+        >
+          ← Back
+        </a>
+      </header>
+
+
+      <!-- FORM -->
+      <main class="form-container">
+
+        <form
+          action="{{ url_for('main.edit', id=member.id) }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+
+          <!-- BASIC INFORMATION -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">01</span>
+
+              <div>
+                <h2>Basic Information</h2>
+                <p>Personal information of the member.</p>
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+              <!-- NAME -->
+              <div class="field">
+
+                <label for="name">
+                  Full Name
+                </label>
+
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value="{{ member.name }}"
+                  required
+                />
+
+              </div>
+
+
+              <!-- EMAIL -->
+              <div class="field">
+
+                <label for="email">
+                  Email
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value="{{ member.email }}"
+                  required
+                />
+
+              </div>
+
+
+              <!-- DATE OF BIRTH -->
+              <div class="field">
+
+                <label for="date_of_birth">
+                  Date of Birth
+                </label>
+
+                <input
+                  type="date"
+                  id="date_of_birth"
+                  name="date_of_birth"
+                  value="{{ member.date_of_birth }}"
+                />
+
+              </div>
+
+
+              <!-- GENDER -->
+              <div class="field">
+
+                <label for="gender">
+                  Gender
+                </label>
+
+                <select id="gender" name="gender">
+
+                  <option value="" disabled>
+                    Select gender
+                  </option>
+
+                  <option
+                    value="male"
+                    {{ "selected" if member.gender == "male" }}
+                  >
+                    Male
+                  </option>
+
+                  <option
+                    value="female"
+                    {{ "selected" if member.gender == "female" }}
+                  >
+                    Female
+                  </option>
+
+                  <option
+                    value="other"
+                    {{ "selected" if member.gender == "other" }}
+                  >
+                    Other
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- WORK INFORMATION -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">02</span>
+
+              <div>
+                <h2>Work Information</h2>
+                <p>Department, salary and experience.</p>
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+              <!-- SALARY -->
+              <div class="field">
+
+                <label for="salary">
+                  Salary
+                </label>
+
+                <div class="input-prefix">
+
+                  <span>৳</span>
+
+                  <input
+                    type="number"
+                    id="salary"
+                    name="salary"
+                    step="0.01"
+                    value="{{ member.salary }}"
+                  />
+
+                </div>
+
+              </div>
+
+
+              <!-- DEPARTMENT -->
+              <div class="field">
+
+                <label for="department_id">
+                  Department
+                </label>
+
+                <select
+                  id="department_id"
+                  name="department_id"
+                >
+
+                  <option value="" disabled>
+                    Select department
+                  </option>
+
+                  {% for department in departments %}
+
+                    <option
+                      value="{{ department.id }}"
+                      {{ "selected" if member.department_id == department.id }}
+                    >
+                      {{ department.department_name }}
+                    </option>
+
+                  {% endfor %}
+
+                </select>
+
+              </div>
+
+
+              <!-- EXPERIENCE -->
+              <div class="field">
+
+                <label for="experience">
+                  Experience
+                </label>
+
+                <select
+                  id="experience"
+                  name="experience"
+                >
+
+                  <option value="" disabled>
+                    Select experience
+                  </option>
+
+                  <option
+                    value="beginner"
+                    {{ "selected" if member.experience == "beginner" }}
+                  >
+                    Beginner
+                  </option>
+
+                  <option
+                    value="intermediate"
+                    {{ "selected" if member.experience == "intermediate" }}
+                  >
+                    Intermediate
+                  </option>
+
+                  <option
+                    value="advanced"
+                    {{ "selected" if member.experience == "advanced" }}
+                  >
+                    Advanced
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <!-- SKILL LEVEL -->
+              <div class="field">
+
+                <label for="skill_level">
+
+                  Skill Level
+
+                  <span class="optional">
+                    0–100
+                  </span>
+
+                </label>
+
+                <input
+                  type="number"
+                  id="skill_level"
+                  name="skill_level"
+                  min="0"
+                  max="100"
+                  value="{{ member.skill_level or '' }}"
+                />
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ONLINE PRESENCE -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">03</span>
+
+              <div>
+                <h2>Online Presence</h2>
+                <p>Website and profile picture.</p>
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+              <!-- WEBSITE -->
+              <div class="field full">
+
+                <label for="personal_website">
+                  Personal Website
+                </label>
+
+                <input
+                  type="url"
+                  id="personal_website"
+                  name="personal_website"
+                  value="{{ member.personal_website or '' }}"
+                  placeholder="https://example.com"
+                />
+
+              </div>
+
+
+              <!-- PROFILE PICTURE -->
+              <div class="field full">
+
+                <label for="profile_pic">
+                  Profile Picture
+                </label>
+
+                <div class="file-box">
+
+                  <div class="file-info">
+
+                    <strong>
+                      Choose a new picture
+                    </strong>
+
+                    <span>
+                      Leave empty to keep the current picture.
+                    </span>
+
+                  </div>
+
+                  <input
+                    type="file"
+                    id="profile_pic"
+                    name="profile_pic"
+                    accept="image/*"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- SKILLS -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">04</span>
+
+              <div>
+                <h2>Skills</h2>
+                <p>Select the skills this member has.</p>
+              </div>
+
+            </div>
+
+
+            <div class="skills-grid">
+
+              {% for skill in skills %}
+
+                <label class="skill-option">
+
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value="{{ skill.id }}"
+                    {{ "checked" if skill in member.skills }}
+                  />
+
+                  <span class="checkbox"></span>
+
+                  <span class="skill-name">
+                    {{ skill.skill_name }}
+                  </span>
+
+                </label>
+
+              {% endfor %}
+
+            </div>
+
+          </section>
+
+
+          <!-- ABOUT -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">05</span>
+
+              <div>
+                <h2>About</h2>
+                <p>A short description about the member.</p>
+              </div>
+
+            </div>
+
+
+            <div class="field full">
+
+              <label for="about">
+                Description
+              </label>
+
+              <textarea
+                id="about"
+                name="about"
+                rows="7"
+                placeholder="Write something about this member..."
+              >{{ member.about or '' }}</textarea>
+
+            </div>
+
+          </section>
+
+
+          <!-- ACCOUNT SETTINGS -->
+          <section class="form-section">
+
+            <div class="section-heading">
+
+              <span class="section-number">06</span>
+
+              <div>
+                <h2>Account Settings</h2>
+                <p>Update account-related information.</p>
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+              <!-- PASSWORD -->
+              <div class="field">
+
+                <label for="password">
+                  New Password
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Leave empty to keep current"
+                />
+
+              </div>
+
+
+              <!-- FAVORITE COLOR -->
+              <div class="field">
+
+                <label for="favorite_color">
+                  Favorite Color
+                </label>
+
+                <div class="color-input">
+
+                  <input
+                    type="color"
+                    id="favorite_color"
+                    name="favorite_color"
+                    value="{{ member.favorite_color or '#ffffff' }}"
+                  />
+
+                  <span>
+                    {{ member.favorite_color or '#ffffff' }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- TERMS -->
+            <label class="terms-option">
+
+              <input
+                type="checkbox"
+                name="terms_accepted"
+                value="on"
+                {{ "checked" if member.terms_accepted }}
+              />
+
+              <span class="checkbox"></span>
+
+              <span>
+                Terms and conditions accepted
+              </span>
+
+            </label>
+
+          </section>
+
+
+          <!-- ACTIONS -->
+          <div class="form-actions">
+
+            <a
+              href="{{ url_for('main.member', id=member.id) }}"
+              class="cancel-btn"
+            >
+              Cancel
+            </a>
+
+            <button
+              type="submit"
+              class="save-btn"
+            >
+              Save Changes
+              <span>→</span>
+            </button>
+
+          </div>
+
+        </form>
+
+      </main>
+
+    </div>
+  </body>
+</html>

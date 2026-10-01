@@ -17,10 +17,8 @@
       <a href="#" class="logo">FORM<span>.</span></a>
 
       <div class="nav-links">
-        <a href="#">Home</a>
         <a href="/" class="active">Add Member</a>
         <a href="/users">Members</a>
-        <a href="#">About</a>
       </div>
     </nav>
 
@@ -180,7 +178,7 @@
         <div class="field full">
           <label for="profile_picture">Profile picture</label>
 
-          <div class="upload-box">
+          <div class="upload-box" id="uploadBox">
             <input
               type="file"
               id="profile_picture"
@@ -188,13 +186,19 @@
               accept="image/png, image/jpeg, image/webp"
             />
 
-            <div class="upload-content">
+            <div class="upload-content" id="uploadContent">
               <div class="upload-icon">↑</div>
 
               <strong>Choose a profile picture</strong>
 
-              <span> PNG, JPG or WEBP </span>
+              <span>PNG, JPG or WEBP</span>
             </div>
+
+            <img
+              id="imagePreview"
+              class="image-preview"
+              alt="Profile picture preview"
+            />
           </div>
         </div>
 
@@ -276,5 +280,33 @@
         <span>Built for learning.</span>
       </footer>
     </main>
+    <script>
+      const profilePicture = document.querySelector("#profile_picture");
+      const uploadBox = document.querySelector("#uploadBox");
+      const imagePreview = document.querySelector("#imagePreview");
+
+      profilePicture.addEventListener("change", () => {
+        const file = profilePicture.files[0];
+
+        if (!file) {
+          uploadBox.classList.remove("has-image");
+          imagePreview.src = "";
+          return;
+        }
+
+        const imageURL = URL.createObjectURL(file);
+
+        imagePreview.src = imageURL;
+        uploadBox.classList.add("has-image");
+      });
+
+      // Reset uploaded image when Reset button is clicked
+      document.querySelector("form").addEventListener("reset", () => {
+        setTimeout(() => {
+          uploadBox.classList.remove("has-image");
+          imagePreview.src = "";
+        }, 0);
+      });
+    </script>
   </body>
 </html>
