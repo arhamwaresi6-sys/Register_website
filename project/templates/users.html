@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Members</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='users.css') }}"
+    />
+  </head>
+
+  <body>
+    <main class="page">
+      <!-- Header -->
+      <header class="header">
+        <div>
+          <p class="eyebrow">DIRECTORY</p>
+          <h1>Our Members</h1>
+          <p class="subtitle">Explore everyone in the community.</p>
+        </div>
+
+        <div class="member-count">
+          <span id="user-count">0</span>
+          <small>Members</small>
+        </div>
+      </header>
+
+      <!-- Search -->
+      <section class="search-section">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+
+          <input
+            type="text"
+            id="search"
+            placeholder="Search members..."
+            autocomplete="off"
+          />
+        </div>
+      </section>
+
+      <!-- Users -->
+      <section class="users-section">
+        <div class="table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>User ID</th>
+                <th>Member</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="users">
+              <!-- JavaScript will generate rows here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='users.js') }}"></script>
+  </body>
+</html>
